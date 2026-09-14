@@ -1,0 +1,98 @@
+{
+"Temelli|Sincan": {
+"lon": 32.3548109,
+"lat": 39.7272693,
+"ad": "Temelli, Gazi, Gazi Mahallesi, Sincan, Ankara, İç Anadolu Bölgesi, Tür",
+"tip": "quarter"
+},
+"Malıköy|Sincan": {
+"lon": 32.3881409,
+"lat": 39.783321,
+"ad": "Malıköy Mahallesi, Sincan, Ankara, İç Anadolu Bölgesi, Türkiye",
+"tip": "administrative/boundary"
+},
+"Yenihisar|Sincan": {
+"lon": 32.43042,
+"lat": 39.72355,
+"ad": "Yenihisar Mahallesi, Sincan, Ankara, İç Anadolu Bölgesi, Türkiye",
+"tip": "administrative/boundary"
+},
+"Çokören|Sincan": {
+"lon": 32.439148,
+"lat": 39.6587757,
+"ad": "Çokören, Sincan, Ankara, İç Anadolu Bölgesi, Türkiye",
+"tip": "village/place"
+},
+"Alagöz|Sincan": {
+"lon": 32.4790202,
+"lat": 39.7466436,
+"ad": "Alagöz Mahallesi, Sincan, Ankara, İç Anadolu Bölgesi, Türkiye",
+"tip": "administrative/boundary"
+},
+"Köseler|Polatlı": {
+"lon": 31.940708,
+"lat": 39.159843,
+"ad": "Tüfekçioğlu, Polatlı, Ankara, İç Anadolu Bölgesi, 06900, Türkiye",
+"tip": "village/place"
+},
+"Karataş|Çubuk": {
+"lon": 32.8374419,
+"lat": 40.2814075,
+"tip": "administrative"
+},
+"Akçaören|Kahramankazan": {
+"lon": 32.728591,
+"lat": 40.2718204,
+"tip": "administrative"
+},
+"İncegiz|Kahramankazan": {
+"lon": 32.7732285,
+"lat": 40.2643545,
+"tip": "administrative"
+},
+"Örencik|Kahramankazan": {
+"lon": 32.6583397,
+"lat": 40.2597899,
+"tip": "administrative"
+},
+"Yakuphasan|Çubuk": {
+"lon": 32.8202714,
+"lat": 40.2306033,
+"tip": "administrative"
+},
+"Kazan|Kahramankazan": {
+"lon": 32.695282,
+"lat": 40.1888676,
+"tip": "tertiary"
+},
+"Peçenek|Kahramankazan": {
+"lon": 32.7960994,
+"lat": 40.223972,
+"tip": "administrative"
+},
+"Abadan|Pursaklar": {
+"lon": 32.86544,
+"lat": 40.116222,
+"tip": "administrative"
+},
+"Kösrelik|Keçiören": {
+"lon": 32.8542782,
+"lat": 40.0696345,
+"tip": "administrative"
+},
+"Dağyaka|Kahramankazan": {
+"lon": 32.657368,
+"lat": 40.077416,
+"tip": "village"
+},
+"Saraçköy|Kahramankazan": {
+"lon": 32.781849,
+"lat": 40.3044149,
+"tip": "administrative"
+},
+"Güvenç|Kahramankazan": {
+"lon": 32.7237277,
+"lat": 40.145016,
+"tip": "administrative"
+}
+}

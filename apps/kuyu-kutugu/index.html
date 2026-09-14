@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kuyu Kütüğü Otomasyonu</title>
+<style>
+:root{
+  --bg:#f4f6f8; --panel:#fff; --line:#111; --muted:#6b7280; --accent:#0f5f8f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#111}
+.app{max-width:1500px;margin:0 auto;padding:16px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+button,.filebtn{border:1px solid #9aa3ad;background:#fff;padding:9px 12px;border-radius:7px;cursor:pointer;font-weight:600}
+button.primary{background:#0f5f8f;color:#fff;border-color:#0f5f8f}
+button.danger{color:#b42318}
+.filebtn input{display:none}
+.status{font-size:13px;color:var(--muted);margin-left:auto}
+.layout{display:grid;grid-template-columns:minmax(360px,460px) minmax(620px,1fr);gap:14px;align-items:start}
+.panel{background:var(--panel);border:1px solid #d6dbe0;border-radius:10px;padding:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabbtn{font-size:13px;padding:7px 9px}
+.tabbtn.active{background:#111;color:#fff}
+.tab{display:none}.tab.active{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:7px}
+label{font-size:12px;font-weight:700}
+input,select,textarea{width:100%;padding:7px;border:1px solid #bbc3cc;border-radius:5px;font:inherit}
+textarea{min-height:72px;resize:vertical}
+.smallnote{font-size:12px;color:var(--muted);margin:5px 0 10px}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.tablewrap{overflow:auto;max-height:330px;border:1px solid #ddd}
+table.editor{border-collapse:collapse;width:100%;font-size:12px}
+table.editor th,table.editor td{border:1px solid #ddd;padding:5px;text-align:center}
+table.editor input,table.editor select{padding:4px;font-size:12px}
+.preview-wrap{overflow:auto;background:#ddd;padding:14px;border-radius:8px}
+.sheet{
+  width:210mm; min-height:297mm; margin:auto; background:white; color:#000;
+  box-shadow:0 2px 14px rgba(0,0,0,.12); padding:4mm; font-family:Arial,Helvetica,sans-serif;
+}
+.k-title{border:1.4px solid #000;text-align:center;font-size:18px;font-weight:700;letter-spacing:7px;padding:5px 0}
+.topgrid{display:grid;grid-template-columns:54% 46%;border-left:1.4px solid #000;border-right:1.4px solid #000}
+.block{border-bottom:1.4px solid #000}
+.block-title{font-size:10px;border-bottom:1px solid #000;padding:2px 3px}
+.formtbl{width:100%;border-collapse:collapse;font-size:8px}
+.formtbl td,.formtbl th{border:1px solid #000;padding:2px 3px;height:16px}
+.formtbl td:first-child{width:38%}
+.right-block{border-left:1.4px solid #000}
+.kroki-box{height:49mm;border-top:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.kroki-box img{max-width:100%;max-height:100%;object-fit:contain}
+.wellhead{height:24mm;position:relative;display:flex;align-items:center;justify-content:center;border-top:1px solid #000}
+.pipe{width:58%;height:17px;border:2px solid #111;position:relative}
+.pipe:before,.pipe:after{content:"";position:absolute;top:-7px;width:14px;height:29px;background:#888}
+.pipe:before{left:-16px}.pipe:after{right:-16px}
+.pipe .diam{font-size:10px;font-weight:700;text-align:center;line-height:13px}
+.pipe .inch{font-size:8px;text-align:center;border-top:1px solid #111}
+.wh-label{position:absolute;font-size:7px}
+.wh-left{left:8px;top:8px}.wh-r1{right:7px;top:7px}.wh-r2{right:7px;bottom:8px}.wh-bottom{bottom:1px;left:50%;transform:translateX(-50%);white-space:nowrap}
+.bottomgrid{display:grid;grid-template-columns:23% 5% 5% 15% 9% 5% 38%;border:1.4px solid #000;border-top:2px double #000;min-height:143mm}
+.bcell{border-right:1px solid #000;position:relative;overflow:hidden}
+.bcell:last-child{border-right:0}
+.bhead{height:15mm;border-bottom:1px solid #000;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:700;padding:2px}
+.vhead{writing-mode:vertical-rl;transform:rotate(180deg);height:15mm;margin:auto}
+.features{padding:3px;font-size:7.5px;line-height:1.25}
+.kf-mini{width:100%;border-collapse:collapse;font-size:5.7px;margin-top:4px}
+.kf-mini td{border:1px solid #000;padding:1px 2px}
+.vvalue{writing-mode:vertical-rl;transform:rotate(180deg);height:115mm;display:flex;align-items:center;justify-content:center;font-size:8px}
+.scheme-body,.lith-body,.water-body,.thoughts-body{height:122mm;position:relative}
+.scheme-body svg,.lith-body svg{width:100%;height:100%;display:block}
+.thoughts-body{font-size:8px;padding:5px;white-space:pre-wrap;line-height:1.35}
+.legend{position:absolute;left:4px;right:4px;bottom:3px;font-size:6px;border-top:1px dashed #777;padding-top:2px}
+.footerline{border:1.4px solid #000;border-top:0;font-size:7px;padding:3px;display:flex;justify-content:space-between}
+@media(max-width:1100px){.layout{grid-template-columns:1fr}.preview-wrap{max-height:none}}
+@media print{
+ body{background:#fff}
+ .app>.toolbar,.layout>.panel:first-child{display:none!important}
+ .app{padding:0;max-width:none}
+ .layout{display:block}
+ .layout>.panel:nth-child(2){border:0;padding:0}
+ .preview-wrap{padding:0;background:#fff;overflow:visible}
+ .sheet{box-shadow:none;margin:0;width:210mm;height:297mm;min-height:297mm;page-break-after:always}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="toolbar">
+    <button type="button" class="primary" id="btnPrint">PDF / Yazdır</button>
+    <button type="button" id="btnWord">Word (.doc) İndir</button>
+    <button type="button" id="btnSave">Projeyi Kaydet</button>
+    <label class="filebtn">Projeyi Aç<input id="loadProject" type="file" accept=".json,application/json"></label>
+    <button type="button" id="btnReset" class="danger">Sıfırla</button>
+    <span class="status" id="status">Hazır</span>
+  </div>
+
+  <div class="layout">
+    <section class="panel">
+      <div class="tabs">
+        <button type="button" class="tabbtn active" data-tab="genel">Genel</button>
+        <button type="button" class="tabbtn" data-tab="su">Su / Firma</button>
+        <button type="button" class="tabbtn" data-tab="boru">Filtre / Boru</button>
+        <button type="button" class="tabbtn" data-tab="lito">Litoloji</button>
+        <button type="button" class="tabbtn" data-tab="kroki">Kroki</button>
+      </div>
+
+      <div class="tab active" id="tab-genel">
+        <div class="grid2">
+          <div class="field"><label>Mevkii</label><input id="mevkii" value="KBC-SK-01"></div>
+          <div class="field"><label>İl</label><input id="il" value="KIRŞEHİR"></div>
+          <div class="field"><label>İlçe</label><input id="ilce"></div>
+          <div class="field"><label>Köy</label><input id="koy"></div>
+          <div class="field"><label>X Koordinatı</label><input id="x" value="600000"></div>
+          <div class="field"><label>Y Koordinatı</label><input id="y" value="4350000"></div>
+          <div class="field"><label>Rakım (m)</label><input id="rakim" value="1200"></div>
+          <div class="field"><label>Açılış Gayesi</label><input id="amac" value="GÖZLEM KUYUSU"></div>
+          <div class="field"><label>Başlangıç</label><input id="baslangic" type="date"></div>
+          <div class="field"><label>Bitiş</label><input id="bitis" type="date"></div>
+          <div class="field"><label>Arama Belgesi</label><input id="arama"></div>
+          <div class="field"><label>Kuyu Derinliği (m)</label><input id="derinlik" type="number" min="1" max="1000" step="0.5" value="80"></div>
+          <div class="field"><label>Delik Çapı</label><input id="delik" value='8 5/8"'></div>
+          <div class="field"><label>Teçhiz Çapı</label><input id="techiz" value="140 / 300 2.SINIF PVC"></div>
+          <div class="field"><label>Kuyu Başı Çap Yazısı</label><input id="qcap" value="Q140 mm"></div>
+          <div class="field"><label>Çakıl</label><input id="cakil" value="7/15 MM VOLK.DERE ÇAKILI"></div>
+        </div>
+      </div>
+
+      <div class="tab" id="tab-su">
+        <div class="grid2">
+          <div class="field"><label>İnkişaf</label><input id="inkisaf" value="Kompresör"></div>
+          <div class="field"><label>İnkişaf Tipi</label><input id="inktip" value="Kapalı"></div>
+          <div class="field"><label>Statik Seviye</label><input id="statik" value="—"></div>
+          <div class="field"><label>Dinamik Seviye</label><input id="dinamik" value="—"></div>
+          <div class="field"><label>Debi (l/s)</label><input id="debi" value="—"></div>
+          <div class="field"><label>Su Deneyi</label><input id="deney" value="YAPILMADI"></div>
+          <div class="field"><label>Açan Firma</label><input id="firma" value="Akkoyunlu Mak. Sondaj Ltd. Şti."></div>
+          <div class="field"><label>Makina Tipi</label><input id="makina" value="Rotary (Havalı)"></div>
+          <div class="field"><label>Adres</label><input id="adres" value="UZAYÇAĞI CADDESİ 140/1 OSTİM/ANKARA"></div>
+          <div class="field"><label>Jeoloji Müh.</label><input id="jeolog" value="Sedat Akkoyunlu"></div>
+          <div class="field"><label>Diploma No</label><input id="dipno" value="6243"></div>
+          <div class="field"><label>Sondör</label><input id="sondor" value="Nevzat Akkoyunlu"></div>
+          <div class="field"><label>Sondör Belge No</label><input id="sondorNo" value="18-IIR-6776"></div>
+        </div>
+      </div>
+
+      <div class="tab" id="tab-boru">
+        <div class="smallnote">Derinliğe göre 4 m'lik satırları otomatik oluştur. Sonra istediğin satırı K veya F yap.</div>
+        <div class="row-actions">
+          <button type="button" id="btnAutoPipe">4 m Boruları Oluştur</button>
+          <button type="button" id="btnToggleAll">Tümünü K Yap</button>
+        </div>
+        <div class="tablewrap">
+          <table class="editor" id="pipeTable">
+            <thead><tr><th>Başlangıç</th><th>Bitiş</th><th>Tip</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="row-actions"><button type="button" id="btnAddPipe">+ 4 m Satır Ekle</button></div>
+      </div>
+
+      <div class="tab" id="tab-lito">
+        <div class="row-actions"><button type="button" id="btnAddLith">Litoloji Satırı Ekle</button></div>
+        <div class="tablewrap">
+          <table class="editor" id="lithTable">
+            <thead><tr><th>Başlangıç</th><th>Bitiş</th><th>Açıklama</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="field" style="margin-top:8px"><label>Düşünceler Ek Not</label><textarea id="dusunceEk"></textarea></div>
+      </div>
+
+      <div class="tab" id="tab-kroki">
+        <div class="field">
+          <label>Kuyu Yeri Krokisi / Uydu Görseli</label>
+          <input id="kroki" type="file" accept="image/*">
+        </div>
+        <div class="smallnote">Görsel seçmezsen alan boş kalır. Görsel yalnızca bu proje açıkken tarayıcı belleğinde tutulur; proje JSON'una otomatik gömülür.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="preview-wrap">
+        <div class="sheet" id="sheet">
+          <div class="k-title">KUYU KÜTÜĞÜ</div>
+          <div class="topgrid">
+            <div>
+              <div class="block">
+                <div class="block-title">A-GENEL DURUM</div>
+                <table class="formtbl" id="pvGeneral"></table>
+              </div>
+              <div class="block">
+                <div class="block-title">B-SU VERİM TECRÜBESİ</div>
+                <table class="formtbl">
+                  <tr><th>Akifer</th><th>Metreler arası</th><th>Süre saat</th><th>Ne ile yapıldığı</th><th>Statik seviye</th><th>Dinamik seviye</th><th>Debi (l/s)</th></tr>
+                  <tr><td>I</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                  <tr><td>II</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                  <tr><td>Müşterek</td><td id="pvRange"></td><td>—</td><td id="pvDeney"></td><td id="pvStatik"></td><td id="pvDinamik"></td><td id="pvDebi"></td></tr>
+                </table>
+              </div>
+              <div class="block">
+                <div class="block-title">C-İNKİŞAF</div>
+                <table class="formtbl">
+                  <tr><td>Ne ile yapıldığı</td><td id="pvInkisaf"></td></tr>
+                  <tr><td>Tipi</td><td id="pvInkTip"></td></tr>
+                  <tr><td>Süresi</td><td>: —</td></tr>
+                </table>
+              </div>
+              <div class="block">
+                <div class="block-title">D-AÇAN FİRMA</div>
+                <table class="formtbl">
+                  <tr><td>Adı</td><td id="pvFirma"></td></tr>
+                  <tr><td>Makinanın tipi</td><td id="pvMakina"></td></tr>
+                  <tr><td>Sondaj (m)</td><td id="pvDepth"></td></tr>
+                  <tr><td>Adres</td><td id="pvAdres"></td></tr>
+                </table>
+              </div>
+            </div>
+            <div class="right-block">
+              <div class="block">
+                <div class="block-title">C-KUYU YERİ KROKİSİ</div>
+                <div class="kroki-box"><img id="pvKroki" alt="" style="display:none"></div>
+              </div>
+              <div class="block">
+                <div class="block-title">F-KUYU BAŞI KROKİSİ</div>
+                <div class="wellhead">
+                  <span class="wh-label wh-left">Çakıl borusu</span>
+                  <span class="wh-label wh-r1">Ağız betonu</span>
+                  <span class="wh-label wh-r2">Boğaz betonu</span>
+                  <div class="pipe"><div class="diam" id="pvQcap">Q140 mm</div><div class="inch" id="pvDelik">8 5/8"</div></div>
+                  <span class="wh-label wh-bottom" id="pvCakil">Çakıl: 7/15 MM VOLK.DERE ÇAKILI</span>
+                </div>
+              </div>
+              <div class="block">
+                <div class="block-title">G-POMPA DURUMU</div>
+                <table class="formtbl"><tr><td>Tipi</td><td>: —</td></tr><tr><td>Motoru</td><td>: —</td></tr><tr><td>Çekim</td><td>: —</td></tr></table>
+              </div>
+              <div class="block">
+                <div class="block-title">H-MESUL ŞAHISLAR</div>
+                <table class="formtbl" id="pvPeople"></table>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottomgrid">
+            <div class="bcell">
+              <div class="bhead">Kuyunun Açılışında<br>Karşılaşılan Özellikler</div>
+              <div class="features" id="pvFeatures"></div>
+            </div>
+            <div class="bcell">
+              <div class="bhead"><span class="vhead">Delik çapı</span></div>
+              <div class="vvalue" id="pvDelikV"></div>
+            </div>
+            <div class="bcell">
+              <div class="bhead"><span class="vhead">Teçhiz çapı</span></div>
+              <div class="vvalue" id="pvTechV"></div>
+            </div>
+            <div class="bcell">
+              <div class="bhead">KUYU ŞEMASI</div>
+              <div class="scheme-body" id="schemeBody"></div>
+            </div>
+            <div class="bcell">
+              <div class="bhead">LİTOLOJİK<br>KESİT</div>
+              <div class="lith-body" id="lithBody"></div>
+            </div>
+            <div class="bcell">
+              <div class="bhead"><span class="vhead">SU VEREN TABAKA</span></div>
+              <div class="water-body"></div>
+            </div>
+            <div class="bcell">
+              <div class="bhead">DÜŞÜNCELER</div>
+              <div class="thoughts-body" id="pvThoughts"></div>
+            </div>
+          </div>
+          <div class="footerline"><span>K = kapalı boru  F = filtreli boru · Su veren tabaka: filtre aralıkları</span><span>Hazırlayan: ........................ Tarih: .................</span></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const state = { pipes: [], lith: [], krokiData: '' };
+  const ids = ['mevkii','il','ilce','koy','x','y','rakim','amac','baslangic','bitis','arama','derinlik','delik','techiz','qcap','cakil','inkisaf','inktip','statik','dinamik','debi','deney','firma','makina','adres','jeolog','dipno','sondor','sondorNo','dusunceEk'];
+  const val = id => $(id).value.trim();
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtDate = s => {
+    if(!s) return '';
+    const [y,m,d] = s.split('-'); return `${d}.${m}.${y}`;
+  };
+  const num = (x, fallback=0) => { const n=Number(String(x).replace(',','.')); return Number.isFinite(n)?n:fallback; };
+  function setStatus(s){ $('status').textContent=s; }
+
+  function addPipe(start=0,end=4,type='K'){
+    state.pipes.push({start,end,type});
+    renderPipeEditor(); updatePreview();
+  }
+  function autoPipes(){
+    const d=Math.max(1, Math.min(1000, num(val('derinlik'),80)));
+    state.pipes=[];
+    for(let s=0;s<d;s+=4) state.pipes.push({start:s,end:Math.min(s+4,d),type:'K'});
+    renderPipeEditor(); updatePreview();
+  }
+  function renderPipeEditor(){
+    const tb=$('pipeTable').querySelector('tbody'); tb.innerHTML='';
+    state.pipes.forEach((p,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td><input type="number" step="0.5" value="${p.start}"></td><td><input type="number" step="0.5" value="${p.end}"></td>
+      <td><select><option value="K"${p.type==='K'?' selected':''}>K - Kapalı</option><option value="F"${p.type==='F'?' selected':''}>F - Filtreli</option></select></td>
+      <td><button type="button" data-del="${i}">Sil</button></td>`;
+      const [a,b]=tr.querySelectorAll('input'); const s=tr.querySelector('select');
+      a.addEventListener('input',()=>{state.pipes[i].start=num(a.value);updatePreview()});
+      b.addEventListener('input',()=>{state.pipes[i].end=num(b.value);updatePreview()});
+      s.addEventListener('change',()=>{state.pipes[i].type=s.value;updatePreview()});
+      tr.querySelector('button').addEventListener('click',()=>{state.pipes.splice(i,1);renderPipeEditor();updatePreview()});
+      tb.appendChild(tr);
+    });
+  }
+  function addLith(start=0,end=10,text=''){
+    state.lith.push({start,end,text}); renderLithEditor(); updatePreview();
+  }
+  function renderLithEditor(){
+    const tb=$('lithTable').querySelector('tbody');tb.innerHTML='';
+    state.lith.forEach((l,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td><input type="number" step="0.5" value="${l.start}"></td><td><input type="number" step="0.5" value="${l.end}"></td><td><input value="${esc(l.text)}"></td><td><button type="button">Sil</button></td>`;
+      const inputs=tr.querySelectorAll('input');
+      inputs[0].addEventListener('input',()=>{state.lith[i].start=num(inputs[0].value);updatePreview()});
+      inputs[1].addEventListener('input',()=>{state.lith[i].end=num(inputs[1].value);updatePreview()});
+      inputs[2].addEventListener('input',()=>{state.lith[i].text=inputs[2].value;updatePreview()});
+      tr.querySelector('button').addEventListener('click',()=>{state.lith.splice(i,1);renderLithEditor();updatePreview()});
+      tb.appendChild(tr);
+    });
+  }
+  function pipeMini(){
+    const rows=Math.ceil(state.pipes.length/2);
+    let h='<table class="kf-mini">';
+    for(let i=0;i<rows;i++){
+      const a=state.pipes[i], b=state.pipes[i+rows];
+      const f=p=>p?`${String(p.start).padStart(3,'0')} - ${String(p.end).padStart(3,'0')} M ${p.type}`:'';
+      h+=`<tr><td>${esc(f(a))}</td><td>${esc(f(b))}</td></tr>`;
+    }
+    return h+'</table>';
+  }
+  function schemeSvg(){
+    const depth=Math.max(1,num(val('derinlik'),80));
+    const W=150,H=450, top=14,bottom=22,usable=H-top-bottom;
+    let y=d=>top+(d/depth)*usable;
+    let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="48" y="${top}" width="52" height="${usable}" fill="white" stroke="black" stroke-width="2"/>
+    <rect x="39" y="${top}" width="7" height="${usable}" fill="none" stroke="black" stroke-width="1"/>`;
+    state.pipes.forEach(p=>{
+      const yy=y(p.start), hh=Math.max(1,y(p.end)-yy);
+      s+=`<rect x="50" y="${yy}" width="48" height="${hh}" fill="${p.type==='F'?'#fafafa':'#eee'}" stroke="black" stroke-width=".6"/>`;
+      if(hh>8) s+=`<text x="74" y="${yy+hh/2+3}" font-size="8" text-anchor="middle" font-weight="700">${p.type}</text>`;
+      if(p.type==='F'){
+        for(let xx=53;xx<96;xx+=6) s+=`<line x1="${xx}" y1="${yy+2}" x2="${xx}" y2="${yy+hh-2}" stroke="#777" stroke-width=".5"/>`;
+      }
+    });
+    const step=depth<=100?20:depth<=220?20:50;
+    for(let d=step;d<=depth;d+=step){
+      const yy=y(d);s+=`<line x1="101" y1="${yy}" x2="108" y2="${yy}" stroke="black"/><text x="110" y="${yy+3}" font-size="7">${d}</text>`;
+    }
+    s+=`<text x="74" y="${H-5}" font-size="8" text-anchor="middle" font-weight="700">KUYU SONU ${depth} m</text></svg>`;
+    return s;
+  }
+  function lithSvg(){
+    const depth=Math.max(1,num(val('derinlik'),80)), W=90,H=450,top=14,bottom=22,usable=H-top-bottom;
+    const y=d=>top+(d/depth)*usable;
+    let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="${top}" width="65" height="${usable}" fill="white" stroke="black"/>`;
+    state.lith.forEach((l,i)=>{
+      const yy=y(l.start), hh=Math.max(1,y(l.end)-yy);
+      s+=`<rect x="6" y="${yy}" width="63" height="${hh}" fill="${i%2?'#fff':'#f5f5f5'}" stroke="black" stroke-width=".5"/>`;
+      const gap=7;
+      if(i%3===0){
+        for(let py=yy+4;py<yy+hh;py+=gap) for(let px=10;px<65;px+=12) s+=`<circle cx="${px}" cy="${py}" r="1" fill="none" stroke="#333" stroke-width=".5"/>`;
+      } else if(i%3===1){
+        for(let py=yy+5;py<yy+hh;py+=9) for(let px=8;px<66;px+=10) s+=`<line x1="${px}" y1="${py+4}" x2="${px+5}" y2="${py-4}" stroke="#333" stroke-width=".8"/>`;
+      } else {
+        for(let py=yy+4;py<yy+hh;py+=7) s+=`<path d="M7 ${py} Q20 ${py-3} 34 ${py} T68 ${py}" fill="none" stroke="#333" stroke-width=".6"/>`;
+      }
+    });
+    s+='</svg>'; return s;
+  }
+  function updatePreview(){
+    const depth=Math.max(1,num(val('derinlik'),80));
+    $('pvGeneral').innerHTML=[
+      ['Mevkii',val('mevkii')],['İli',val('il')],['İlçesi',val('ilce')],['Köyü',val('koy')],
+      ['Koordinatı',`X ${val('x')}  Y ${val('y')}`],['Kuyu zemin rakımı',`${val('rakim')} m`],['Açılış gayesi',val('amac')],
+      ['Başlangıç tarihi',fmtDate(val('baslangic'))],['Bitiş tarihi',fmtDate(val('bitis'))],['Arama belgesi tarih ve no',val('arama')]
+    ].map(([a,b])=>`<tr><td>${esc(a)}</td><td>: ${esc(b)}</td></tr>`).join('');
+    $('pvRange').textContent=`0-${depth}`;
+    $('pvDeney').textContent=val('deney');$('pvStatik').textContent=val('statik');$('pvDinamik').textContent=val('dinamik');$('pvDebi').textContent=val('debi');
+    $('pvInkisaf').textContent=': '+val('inkisaf');$('pvInkTip').textContent=': '+val('inktip');
+    $('pvFirma').textContent=': '+val('firma');$('pvMakina').textContent=': '+val('makina');$('pvDepth').textContent=': '+depth;$('pvAdres').textContent=': '+val('adres');
+    $('pvQcap').textContent=val('qcap');$('pvDelik').textContent='←  '+val('delik')+'  →';$('pvCakil').textContent='Çakıl: '+val('cakil');
+    $('pvPeople').innerHTML=`<tr><th>Mesleği</th><th>Adı Soyadı</th><th>Dip. No</th><th>İmzası</th></tr>
+    <tr><td>Jeoloji Müh.</td><td>${esc(val('jeolog'))}</td><td>${esc(val('dipno'))}</td><td></td></tr>
+    <tr><td>Sondör</td><td>${esc(val('sondor'))}</td><td>${esc(val('sondorNo'))}</td><td></td></tr>`;
+    $('pvFeatures').innerHTML=`<b>Delgi yöntemi</b><br>HAVALI<br><br><b>Kompresör</b><br>ATLAS COPCO<br><br><b>Çakıllama</b><br>${esc(val('cakil'))}<br><br><b>Statik seviye</b><br>${esc(val('statik'))}<br><br><b>Dinamik seviye</b><br>${esc(val('dinamik'))}<br><br><b>Kompresör verimi</b><br>${esc(val('deney'))}${pipeMini()}`;
+    $('pvDelikV').textContent=val('delik');$('pvTechV').textContent=val('techiz');
+    $('schemeBody').innerHTML=schemeSvg();$('lithBody').innerHTML=lithSvg();
+    const lithText=state.lith.map(l=>`${l.start} - ${l.end} m\n${l.text}`).join('\n\n');
+    $('pvThoughts').textContent=(lithText+(val('dusunceEk')?'\n\n'+val('dusunceEk'):'')+`\n\nKuyu Sonu ${depth} m`).trim();
+    if(state.krokiData){$('pvKroki').src=state.krokiData;$('pvKroki').style.display='block'}else{$('pvKroki').style.display='none';$('pvKroki').removeAttribute('src')}
+  }
+  function collect(){
+    const data={fields:{},pipes:state.pipes,lith:state.lith,krokiData:state.krokiData};
+    ids.forEach(id=>data.fields[id]=$(id).value);
+    return data;
+  }
+  function apply(data){
+    if(data.fields) ids.forEach(id=>{if(id in data.fields) $(id).value=data.fields[id]});
+    state.pipes=Array.isArray(data.pipes)?data.pipes:[];
+    state.lith=Array.isArray(data.lith)?data.lith:[];
+    state.krokiData=data.krokiData||'';
+    renderPipeEditor();renderLithEditor();updatePreview();
+  }
+  function downloadBlob(blob,name){
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+  }
+  function safeName(){
+    const x=(val('mevkii')||'KUYU').replace(/[^\p{L}\p{N}._-]+/gu,'_');return x;
+  }
+  function exportWord(){
+    const styles=`<style>body{font-family:Arial;font-size:8pt}.sheet{width:190mm}.k-title{text-align:center;font-size:18pt;font-weight:bold;letter-spacing:5pt;border:1px solid #000;padding:5px}.topgrid{display:table;width:100%;border-collapse:collapse}.topgrid>div{display:table-cell;width:50%;vertical-align:top;border:1px solid #000}.formtbl{width:100%;border-collapse:collapse}.formtbl td,.formtbl th{border:1px solid #000;padding:2px}.block-title{border-bottom:1px solid #000}.kroki-box{height:180px;text-align:center}.kroki-box img{max-width:100%;max-height:180px}.bottomgrid{display:table;width:100%;border-collapse:collapse}.bcell{display:table-cell;vertical-align:top;border:1px solid #000}.bhead{text-align:center;font-weight:bold;border-bottom:1px solid #000}.features,.thoughts-body{padding:4px}.footerline{border:1px solid #000;padding:3px}.kf-mini{border-collapse:collapse}.kf-mini td{border:1px solid #000}</style>`;
+    const docHtml=`<!doctype html><html><head><meta charset="utf-8">${styles}</head><body>${$('sheet').outerHTML}</body></html>`;
+    downloadBlob(new Blob(['\ufeff',docHtml],{type:'application/msword'}),safeName()+'_KUYU_KUTUGU.doc');
+    setStatus('Word indirildi');
+  }
+
+  document.querySelectorAll('.tabbtn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');$('tab-'+b.dataset.tab).classList.add('active');
+  }));
+  ids.forEach(id=>$(id).addEventListener('input',updatePreview));
+  $('derinlik').addEventListener('change',()=>{ if(!state.pipes.length) autoPipes(); });
+  $('btnAutoPipe').addEventListener('click',autoPipes);
+  $('btnAddPipe').addEventListener('click',()=>{
+    const depth=Math.max(1, Math.min(1000, num(val('derinlik'),80)));
+    if(state.pipes.length===0){
+      addPipe(0, Math.min(4, depth), 'K');
+      return;
+    }
+    const last=state.pipes[state.pipes.length-1];
+    const start=num(last.end,0);
+    const end=Math.min(start+4, depth);
+    if(start>=depth){
+      setStatus('Kuyu derinliğine ulaşıldı');
+      return;
+    }
+    addPipe(start,end,'K');
+  });
+  $('btnToggleAll').addEventListener('click',()=>{state.pipes.forEach(p=>p.type='K');renderPipeEditor();updatePreview()});
+  $('btnAddLith').addEventListener('click',()=>addLith(0,10,''));
+  $('kroki').addEventListener('change',e=>{
+    const f=e.target.files[0]; if(!f){state.krokiData='';updatePreview();return}
+    const reader=new FileReader();reader.onload=()=>{state.krokiData=reader.result;updatePreview()};reader.readAsDataURL(f);
+  });
+  $('btnPrint').addEventListener('click',()=>window.print());
+  $('btnWord').addEventListener('click',exportWord);
+  $('btnSave').addEventListener('click',()=>downloadBlob(new Blob([JSON.stringify(collect(),null,2)],{type:'application/json'}),safeName()+'_proje.json'));
+  $('loadProject').addEventListener('change',e=>{
+    const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{apply(JSON.parse(r.result));setStatus('Proje açıldı')}catch{alert('Proje dosyası okunamadı')}};r.readAsText(f);
+  });
+  $('btnReset').addEventListener('click',()=>{
+    if(!confirm('Tüm alanlar sıfırlansın mı?'))return;
+    ids.forEach(id=>$(id).value='');$('derinlik').value='80';state.pipes=[];state.lith=[];state.krokiData='';renderPipeEditor();renderLithEditor();updatePreview();
+  });
+
+  // Başlangıç örneği
+  autoPipes();
+  state.lith=[{start:0,end:1,text:'NEBATİ TOPRAK'},{start:1,end:40,text:'KUM-ÇAKIL-KİL'},{start:40,end:80,text:'METAMORFİK BİRİM'}];
+  renderLithEditor();updatePreview();
+})();
+</script>
+</body>
+</html>
