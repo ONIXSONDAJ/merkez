@@ -11,7 +11,7 @@ ONIX Sondaj / AKKOYUNLU için bugüne kadar yapılan uygulamaların tek adresten
 | Ada Parsel Sondaj Raporu | `apps/ada-parsel/` — bu depoda (paftalar dahil) | `yazılım\ada parsel` |
 | AKKOYUNLU Fiyat Teklifi | https://onixsondaj.github.io/fiyat-teklifi/ | `ONIXSONDAJ/fiyat-teklifi` |
 | Depo Takip | https://onixsondaj.github.io/depo-takip-/ | `ONIXSONDAJ/depo-takip-` |
-| Fiş Takip Sistemi | https://fis-takip-2697a.web.app/ (demo: `apps/fis-takip/`) | `ONIXSONDAJ/Fi-sistem-takip-` |
+| Fiş Takip Sistemi | https://fis-takip-2697a.web.app/ | `ONIXSONDAJ/Fi-sistem-takip-` |
 | Dalgıç Pompa Satış | https://www.dalgicpompasatis.com/ | `yazılım\dalgıç pompa yazılım` |
 
 Kendi deposu olan uygulamalar (fiyat teklifi, depo takip, fiş takip) ve kendi alan adında yayınlanan
@@ -35,4 +35,3 @@ git push
   Servis günlük limit uyarısı verirse bilgisayarda `ADA-PARSEL.bat` ile açılır; o sürüm yerel sunucu
   üzerinden aracılık yapar.
 - **CoreLog ve Kuyu Kütüğü:** Tamamen çevrimdışı çalışır, veriler tarayıcıda saklanır.
-- **Fiş Takip demo:** Örnek verilerle çalışır, Firebase'e bağlanmaz.
