@@ -12,194 +12,152 @@
 <style>
 :root{
   --bg:#f1f5f9;--panel:#ffffff;--line:#e2e8f0;--text:#0f172a;--muted:#64748b;--soft:#f8fafc;
-  --accent:#0ea5e9;--accent-2:#0369a1;--ok:#16a34a;--warn:#d97706;--danger:#dc2626;
-  --shadow:0 1px 2px rgba(15,23,42,.06),0 8px 24px -12px rgba(15,23,42,.18);
+  --accent:#0369a1;
+  --shadow:0 1px 2px rgba(15,23,42,.05),0 6px 16px -10px rgba(15,23,42,.18);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0b1220;--panel:#111a2e;--line:#243047;--text:#e5e7eb;--muted:#94a3b8;--soft:#0f172a;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -12px rgba(0,0,0,.6);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 20px -12px rgba(0,0,0,.6);
   }
 }
 :root[data-theme="dark"]{
   --bg:#0b1220;--panel:#111a2e;--line:#243047;--text:#e5e7eb;--muted:#94a3b8;--soft:#0f172a;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -12px rgba(0,0,0,.6);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 20px -12px rgba(0,0,0,.6);
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
-a{color:inherit}
-.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top-in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:.5px;text-decoration:none}
-.brand svg{width:34px;height:34px}
-.brand small{display:block;font-weight:500;font-size:12px;color:var(--muted);letter-spacing:0}
-.search{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:0 12px;height:44px}
-.search input{flex:1;border:0;background:transparent;color:inherit;font:inherit;outline:none;min-width:0}
-.search svg{width:18px;height:18px;fill:var(--muted);flex:none}
-.icon-btn{height:44px;min-width:44px;border:1px solid var(--line);background:var(--soft);border-radius:12px;color:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;font:inherit}
-.icon-btn svg{width:18px;height:18px;fill:currentColor}
-.wrap{max-width:1180px;margin:0 auto;padding:20px 20px 60px}
-.hero{padding:6px 0 4px;color:var(--muted);font-size:14px}
-.hero b{color:var(--text)}
-.sec{margin:26px 0 12px;display:flex;align-items:baseline;gap:10px}
-.sec h2{margin:0;font-size:15px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700}
-.sec span{font-size:13px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
-.card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
-.card.hide{display:none}
-.card-h{display:flex;gap:12px;align-items:flex-start}
-.ic{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;flex:none;color:#fff}
-.ic svg{width:26px;height:26px;fill:currentColor}
-.card h3{margin:0;font-size:17px;line-height:1.25}
-.card .sub{color:var(--muted);font-size:13px;margin-top:2px}
-.card p{margin:0;color:var(--text);font-size:14px;opacity:.9}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--soft);color:var(--muted)}
-.tag.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
-.tag.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 35%,var(--line))}
-.tag.info{color:var(--accent-2);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:42px;padding:0 16px;border-radius:11px;border:1px solid var(--line);background:var(--soft);color:inherit;text-decoration:none;font-weight:600;font-size:14px;cursor:pointer;font:inherit}
-.btn.primary{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
-.btn.primary:hover{background:#075985}
-.note{font-size:12.5px;color:var(--muted);border-left:3px solid var(--line);padding:4px 10px;background:var(--soft);border-radius:0 8px 8px 0}
-.note b{color:var(--text)}
-.empty{display:none;text-align:center;color:var(--muted);padding:40px}
-.foot{margin-top:40px;color:var(--muted);font-size:13px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
-.foot a{color:var(--accent-2)}
-@media (max-width:640px){.top-in{padding:10px 14px}.wrap{padding:14px 14px 50px}.grid{grid-template-columns:1fr}.brand small{display:none}}
+html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration:none}
+
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--panel) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:960px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;letter-spacing:.4px;flex:none}
+.brand svg{width:26px;height:26px}
+.search{flex:1;min-width:0;display:flex;align-items:center;gap:6px;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:0 10px;height:36px}
+.search input{flex:1;border:0;background:transparent;color:inherit;font:inherit;font-size:14px;outline:none;min-width:0}
+.search svg{width:16px;height:16px;fill:var(--muted);flex:none}
+.icon-btn{height:36px;width:36px;flex:none;border:1px solid var(--line);background:var(--soft);border-radius:10px;color:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;font:inherit}
+.icon-btn svg{width:16px;height:16px;fill:currentColor}
+
+.wrap{max-width:960px;margin:0 auto;padding:12px 14px 40px}
+.sec{margin:14px 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:700}
+.sec:first-child{margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+@media (max-width:520px){.grid{grid-template-columns:repeat(3,1fr);gap:8px}.tile{padding:10px 6px 8px;min-height:118px;gap:4px}.ic{width:44px;height:44px;border-radius:12px}.ic svg{width:24px;height:24px}.tile h3{font-size:12.5px}.tile .sub{font-size:10.5px}.tile .alt{font-size:10px;padding:1px 7px}}
+.tile{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 10px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;box-shadow:var(--shadow);transition:transform .12s,border-color .12s;min-height:132px}
+.tile:active{transform:scale(.97)}
+@media (hover:hover){.tile:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}}
+.tile.hide{display:none}
+.tile .main{position:absolute;inset:0;border-radius:14px}
+.ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;color:#fff;flex:none}
+.ic svg{width:28px;height:28px;fill:currentColor}
+.tile h3{margin:2px 0 0;font-size:13.5px;line-height:1.2;font-weight:700}
+.tile .sub{color:var(--muted);font-size:11.5px;line-height:1.25}
+.tile .alt{position:relative;z-index:1;margin-top:auto;font-size:11px;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:999px;padding:2px 9px;background:var(--soft)}
+.tile .ext{position:absolute;top:8px;right:8px;width:14px;height:14px;fill:var(--muted);opacity:.6}
+.empty{display:none;text-align:center;color:var(--muted);padding:30px 0;font-size:13px}
+.foot{margin-top:24px;color:var(--muted);font-size:11.5px;text-align:center}
+.foot a{color:var(--accent)}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="./">
+    <a class="brand" href="./" aria-label="MERKEZ">
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0f172a"/><rect x="6" y="6" width="9" height="9" rx="2" fill="#0ea5e9"/><rect x="17" y="6" width="9" height="9" rx="2" fill="#f59e0b"/><rect x="6" y="17" width="9" height="9" rx="2" fill="#22c55e"/><rect x="17" y="17" width="9" height="9" rx="2" fill="#e2e8f0"/></svg>
-      <div>MERKEZ<small>ONIX Sondaj · AKKOYUNLU uygulama portalı</small></div>
+      <span>MERKEZ</span>
     </a>
     <label class="search">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
-      <input id="q" type="search" placeholder="Uygulama ara… (örn. karot, teklif, depo, fiş)" autocomplete="off">
+      <input id="q" type="search" placeholder="Ara" autocomplete="off">
     </label>
     <button class="icon-btn" id="theme" title="Açık / koyu tema"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.5 0-.9-.1-1.3A5.5 5.5 0 0 1 13.3 3.1 9 9 0 0 0 12 3z"/></svg></button>
   </div>
 </header>
 
 <main class="wrap">
-  <div class="hero">Tüm uygulamalar tek adreste. Telefon veya tablette bu sayfayı <b>Ana ekrana ekle</b> ile kaydedin; her uygulama buradan bir dokunuşla açılır.</div>
 
-  <div class="sec"><h2>Saha ve Jeoloji</h2><span>sondaj, karot, rapor</span></div>
+  <div class="sec">Saha ve Jeoloji</div>
   <div class="grid">
 
-    <article class="card" data-k="corelog karot loglama rqd jeoteknik numune qaqc jorc litoloji tablet">
-      <div class="card-h">
-        <div class="ic" style="background:#0ea5e9"><svg viewBox="0 0 24 24"><path d="M7 2h10v20l-5-3-5 3zM9 6v3h6V6zm0 5v3h6v-3z"/></svg></div>
-        <div><h3>CoreLog</h3><div class="sub">Karot loglama sistemi</div></div>
-      </div>
-      <p>Proje → kuyu → litoloji, alterasyon, mineralizasyon, yapı, RQD, numune, sapma, fotoğraf, analiz. Canlı şerit log, QAQC, rapor ve Excel dışa aktarma.</p>
-      <div class="tags"><span class="tag ok">Çevrimdışı çalışır</span><span class="tag info">Tablet öncelikli</span><span class="tag">TR / EN</span></div>
-      <div class="acts">
-        <a class="btn primary" href="apps/corelog/">Aç</a>
-        <a class="btn" href="apps/corelog/CoreLog.html" title="Tek dosya sürümü">Tek dosya</a>
-      </div>
-    </article>
+    <div class="tile" data-k="corelog karot loglama rqd jeoteknik numune qaqc litoloji">
+      <a class="main" href="apps/corelog/" aria-label="CoreLog"></a>
+      <div class="ic" style="background:#0ea5e9"><svg viewBox="0 0 24 24"><path d="M7 2h10v20l-5-3-5 3zM9 6v3h6V6zm0 5v3h6v-3z"/></svg></div>
+      <h3>CoreLog</h3>
+      <div class="sub">Karot loglama · RQD</div>
+    </div>
 
-    <article class="card" data-k="kuyu kütüğü kutugu otomasyon su sondaj a4 form">
-      <div class="card-h">
-        <div class="ic" style="background:#0369a1"><svg viewBox="0 0 24 24"><path d="M6 2h12v2H6zm3 3h6v14l-3 3-3-3zm1 2v3h4V7z"/></svg></div>
-        <div><h3>Kuyu Kütüğü Otomasyonu</h3><div class="sub">Su sondajı kuyu kütüğü formu</div></div>
-      </div>
-      <p>Kuyu bilgileri, teçhiz, tabaka ve kroki girilir; A4 kuyu kütüğü sayfası anında oluşur ve yazdırılır.</p>
-      <div class="tags"><span class="tag ok">Çevrimdışı çalışır</span><span class="tag">Tek dosya</span><span class="tag">A4 çıktı</span></div>
-      <div class="acts"><a class="btn primary" href="apps/kuyu-kutugu/">Aç</a></div>
-    </article>
+    <div class="tile" data-k="kuyu kütüğü kutugu otomasyon su sondaj a4 form">
+      <a class="main" href="apps/kuyu-kutugu/" aria-label="Kuyu Kütüğü"></a>
+      <div class="ic" style="background:#0369a1"><svg viewBox="0 0 24 24"><path d="M6 2h12v2H6zm3 3h6v14l-3 3-3-3zm1 2v3h4V7z"/></svg></div>
+      <h3>Kuyu Kütüğü</h3>
+      <div class="sub">A4 kuyu kütüğü formu</div>
+    </div>
 
-    <article class="card" data-k="ada parsel tkgm tapu pafta jeoloji harita sondaj raporu">
-      <div class="card-h">
-        <div class="ic" style="background:#16a34a"><svg viewBox="0 0 24 24"><path d="M3 5l6-2 6 2 6-2v16l-6 2-6-2-6 2zm6 0v14l6 2V7zM12 8l2 4h-4z"/></svg></div>
-        <div><h3>Ada Parsel Sondaj Raporu</h3><div class="sub">TKGM parsel sorgusu + MTA jeoloji paftaları</div></div>
-      </div>
-      <p>Mahalle / ada / parsel girilir, sınırlar TKGM'den çekilir, jeoloji paftası üzerine düşürülür ve sondaj ön raporu hazırlanır.</p>
-      <div class="tags"><span class="tag">İnternet (TKGM)</span><span class="tag">Harita</span><span class="tag">Rapor</span></div>
-      <div class="acts"><a class="btn primary" href="apps/ada-parsel/">Aç</a></div>
-      <div class="note">Parsel sorgusu burada doğrudan TKGM servisine gider; servis günlük limit uyarısı verirse bilgisayarda <b>ADA-PARSEL.bat</b> ile açın.</div>
-    </article>
+    <div class="tile" data-k="ada parsel tkgm tapu pafta jeoloji harita sondaj raporu">
+      <a class="main" href="apps/ada-parsel/" aria-label="Ada Parsel"></a>
+      <div class="ic" style="background:#16a34a"><svg viewBox="0 0 24 24"><path d="M3 5l6-2 6 2 6-2v16l-6 2-6-2-6 2zm6 0v14l6 2V7zM12 8l2 4h-4z"/></svg></div>
+      <h3>Ada Parsel</h3>
+      <div class="sub">TKGM sorgu · jeoloji paftası</div>
+    </div>
   </div>
 
-  <div class="sec"><h2>İşletme</h2><span>teklif, stok, harcama</span></div>
+  <div class="sec">İşletme</div>
   <div class="grid">
 
-    <article class="card" data-k="fiyat teklifi akkoyunlu sondaj pompa pdf teklif">
-      <div class="card-h">
-        <div class="ic" style="background:#f59e0b"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zm8 1v5h5zM8 12h8v2H8zm0 4h8v2H8z"/></svg></div>
-        <div><h3>Fiyat Teklifi</h3><div class="sub">AKKOYUNLU sondaj ve pompa teklifleri</div></div>
-      </div>
-      <p>Sondaj ve dalgıç pompa fiyat teklifi hazırlama. Otomatik teklif no ve tarih, kayıt arşivi, A4 PDF çıktı.</p>
-      <div class="tags"><span class="tag ok">Çevrimdışı çalışır</span><span class="tag">Tek dosya</span><span class="tag info">GitHub Pages</span></div>
-      <div class="acts"><a class="btn primary" href="https://onixsondaj.github.io/fiyat-teklifi/">Aç</a></div>
-    </article>
+    <div class="tile" data-k="fiyat teklifi akkoyunlu sondaj pompa pdf teklif">
+      <a class="main" href="https://onixsondaj.github.io/fiyat-teklifi/" aria-label="Fiyat Teklifi"></a>
+      <div class="ic" style="background:#f59e0b"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zm8 1v5h5zM8 12h8v2H8zm0 4h8v2H8z"/></svg></div>
+      <h3>Fiyat Teklifi</h3>
+      <div class="sub">Sondaj ve pompa teklifleri</div>
+    </div>
 
-    <article class="card" data-k="depo takip stok qr ostim yenikent malzeme">
-      <div class="card-h">
-        <div class="ic" style="background:#7c3aed"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4zm9-1.8L5.5 8 12 10.8 18.5 8zM5 9.6v6.2l6 2.7v-6.2zm14 0-6 2.7v6.2l6-2.7z"/></svg></div>
-        <div><h3>Depo Takip</h3><div class="sub">QR ile giriş / çıkış, çok kullanıcılı</div></div>
-      </div>
-      <p>Ostim ve Yenikent depoları için stok yönetimi. QR etiket yazdırma, kamerayla okutup giriş, makine/vinç çıkışı, satış, transfer, iade.</p>
-      <div class="tags"><span class="tag ok">Çevrimdışı çalışır</span><span class="tag info">GitHub Pages</span><span class="tag">Telefon</span></div>
-      <div class="acts"><a class="btn primary" href="https://onixsondaj.github.io/depo-takip-/">Aç</a></div>
-    </article>
+    <div class="tile" data-k="depo takip stok qr ostim yenikent malzeme">
+      <a class="main" href="https://onixsondaj.github.io/depo-takip-/" aria-label="Depo Takip"></a>
+      <div class="ic" style="background:#7c3aed"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4zm9-1.8L5.5 8 12 10.8 18.5 8zM5 9.6v6.2l6 2.7v-6.2zm14 0-6 2.7v6.2l6-2.7z"/></svg></div>
+      <h3>Depo Takip</h3>
+      <div class="sub">QR ile stok giriş / çıkış</div>
+    </div>
 
-    <article class="card" data-k="fiş takip fis harcama personel muhasebe limit gemini firebase">
-      <div class="card-h">
-        <div class="ic" style="background:#0f2f52"><svg viewBox="0 0 24 24"><path d="M5 2h14v20l-2-1.5L15 22l-2-1.5L11 22l-2-1.5L7 22l-2-1.5zm3 5v2h8V7zm0 4v2h8v-2zm0 4v2h5v-2z"/></svg></div>
-        <div><h3>Fiş Takip Sistemi</h3><div class="sub">Personel harcama fişleri ve limit yönetimi</div></div>
-      </div>
-      <p>Personel fiş fotoğrafını gönderir, yapay zekâ tutarı ve tarihi okur, muhasebeci onaylar. Limit, borç, uyarı eşiği ve Excel raporları.</p>
-      <div class="tags"><span class="tag info">Firebase</span><span class="tag">Telefon</span><span class="tag">Yapay zekâ</span></div>
-      <div class="acts">
-        <a class="btn primary" href="https://fis-takip-2697a.web.app/">Aç</a>
-        <a class="btn" href="apps/fis-takip/" title="Örnek verilerle, giriş gerektirmez">Demo</a>
-      </div>
-    </article>
+    <div class="tile" data-k="fiş takip fis harcama personel muhasebe limit">
+      <a class="main" href="https://fis-takip-2697a.web.app/" aria-label="Fiş Takip"></a>
+      <div class="ic" style="background:#0f2f52"><svg viewBox="0 0 24 24"><path d="M5 2h14v20l-2-1.5L15 22l-2-1.5L11 22l-2-1.5L7 22l-2-1.5zm3 5v2h8V7zm0 4v2h8v-2zm0 4v2h5v-2z"/></svg></div>
+      <h3>Fiş Takip</h3>
+      <div class="sub">Personel harcama fişleri</div>
+      <a class="alt" href="apps/fis-takip/" title="Örnek verilerle, giriş gerektirmez">Demo</a>
+    </div>
   </div>
 
-  <div class="sec"><h2>Web Sitesi</h2><span>satış</span></div>
+  <div class="sec">Web Sitesi</div>
   <div class="grid">
 
-    <article class="card" data-k="dalgıç pompa satış e-ticaret poldap impo">
-      <div class="card-h">
-        <div class="ic" style="background:#2563eb"><svg viewBox="0 0 24 24"><path d="M12 2c-3 4-6 7.5-6 11a6 6 0 0 0 12 0c0-3.5-3-7-6-11zm0 15a3 3 0 0 1-3-3h2a1 1 0 0 0 1 1z"/></svg></div>
-        <div><h3>Dalgıç Pompa Satış</h3><div class="sub">dalgicpompasatis.com</div></div>
-      </div>
-      <p>POLDAP ve İMPO dalgıç pompalar, motorlar, kolon boruları. Kuyu bilgilerine göre pompa seçici, sepet ve ödeme.</p>
-      <div class="tags"><span class="tag ok">Yayında</span><span class="tag">E-ticaret</span></div>
-      <div class="acts"><a class="btn primary" href="https://www.dalgicpompasatis.com/">Aç</a></div>
-    </article>
+    <div class="tile" data-k="dalgıç pompa satış e-ticaret poldap impo">
+      <a class="main" href="https://www.dalgicpompasatis.com/" aria-label="Dalgıç Pompa Satış"></a>
+      <div class="ic" style="background:#2563eb"><svg viewBox="0 0 24 24"><path d="M12 2c-3 4-6 7.5-6 11a6 6 0 0 0 12 0c0-3.5-3-7-6-11zm0 15a3 3 0 0 1-3-3h2a1 1 0 0 0 1 1z"/></svg></div>
+      <h3>Dalgıç Pompa</h3>
+      <div class="sub">dalgicpompasatis.com</div>
+    </div>
   </div>
 
   <div class="empty" id="empty">Aramanıza uyan uygulama yok.</div>
 
-  <footer class="foot">
-    <span>Kaynak kodu: <a href="https://github.com/ONIXSONDAJ/merkez">github.com/ONIXSONDAJ/merkez</a></span>
-    <span id="year"></span>
-  </footer>
+  <footer class="foot">Telefonda <b>Ana ekrana ekle</b> ile kaydedin · <a href="https://github.com/ONIXSONDAJ/merkez">kaynak</a></footer>
 </main>
 
 <script>
 (function(){
   var q = document.getElementById('q');
-  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var tiles = Array.prototype.slice.call(document.querySelectorAll('.tile'));
   function norm(s){ return (s||'').toLocaleLowerCase('tr'); }
   q.addEventListener('input', function(){
     var v = norm(q.value.trim()), n = 0;
-    cards.forEach(function(c){
+    tiles.forEach(function(c){
       var hit = !v || norm(c.textContent + ' ' + c.dataset.k).indexOf(v) >= 0;
       c.classList.toggle('hide', !hit); if (hit) n++;
     });
     document.querySelectorAll('.sec').forEach(function(s){
       var g = s.nextElementSibling;
-      var any = g && g.querySelector('.card:not(.hide)');
+      var any = g && g.querySelector('.tile:not(.hide)');
       s.style.display = any ? '' : 'none'; if (g) g.style.display = any ? '' : 'none';
     });
     document.getElementById('empty').style.display = n ? 'none' : 'block';
@@ -211,7 +169,6 @@ a{color:inherit}
     document.documentElement.dataset.theme = next;
     try { localStorage.setItem('merkez.theme', next); } catch(e){}
   });
-  document.getElementById('year').textContent = 'MERKEZ · ' + new Date().getFullYear();
 })();
 </script>
 </body>
